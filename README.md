@@ -1,6 +1,7 @@
 # chaser api
 搜索单词
 http://www.iciba.com/index.php?a=getWordMean&c=search&list=1%2C3%2C4%2C8%2C9%2C12%2C13%2C15&word=cat&_=1479276597365&callback=jsonp7
+
 搜索句子
 http://www.iciba.com/index.php?a=getWordMean&c=search&list=1%2C3%2C4%2C8%2C9%2C12%2C13%2C15&word=i+have+a+pan&_=1479276739823&callback=jsonp16
 
