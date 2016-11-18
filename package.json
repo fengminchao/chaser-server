@@ -9,7 +9,11 @@
   "author": "ybao",
   "license": "ISC",
   "dependencies":{
-  	"express": "~4.13.4"
+  	"express": "~4.13.4",
+    "cheerio": "0.22.0",
+    "superagent": "2.3.0",
+    "async": "2.1.2",
+    "mongoose": "4.6.8"
   }
 
 }
