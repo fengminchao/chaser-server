@@ -1,4 +1,4 @@
-var mongoose = requier('mongoose');
+var mongoose = require('mongoose');
 
 var WordbankSchema = mongoose.Schema({
 	category: String,
@@ -11,4 +11,4 @@ var WordbankSchema = mongoose.Schema({
 
 var Wordbank = mongoose.model('Wordbank',WordbankSchema);
 
-module.exports = Wordbank;
+// module.exports = Wordbank;

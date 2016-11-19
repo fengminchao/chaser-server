@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var config = require('../config');
-
-var WordModel;
+var WordModel = require('../models').Word;
+// var WordModel;
 // mongoose.connect('mongodb://localhost/' + config.db);
 
 mongoose.Promise = global.Promise;
@@ -15,22 +15,10 @@ db.once('open',function(){
 });
 
 // WordModel = require('../models/word');
-var WordSchema = mongoose.Schema({
-	classId: Number,
-	courseId: Number,
-	order: Number,
-	word: String,
-	phonetic: String,
-	explain: String
-});
-
-var WordModel = mongoose.model('Word',WordSchema);
-
-
 
 
 console.log('start insert word');
-insertWords();
+// insertWords();
 var word;
 
 function insertWords(){
@@ -58,3 +46,8 @@ function insertWords(){
 		console.log(words);
 	})
 }
+
+WordModel.find(function(err,words){
+		if (err) return err;
+		console.log(words);
+	})

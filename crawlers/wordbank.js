@@ -1,9 +1,11 @@
 var cheerio = require('cheerio');
 var request = require('superagent');
-var WordbankModel = require('')
+var WordbankModel = require('../models').Wordbank;
+var config = require('../config');
+var wordCrawler = require('./word');
 // var fs = require('fs');
 
-var wordbankList = [];
+
 
 function getWordbankList(){
 	request.get('http://word.iciba.com/')
@@ -31,16 +33,27 @@ function parseHtml(text){
 				if (length == 0) {
 				var countStr = $('p',element).text();
 				countStr = countStr.match(/[0-9]+/);
-				var wordbank = {
+				var wordbank = new WordbankModel({
 					category: category,
 					bankName: $(':header',element).text(),
 					classId: $(element).attr('class_id'),
-					count: countStr[0]
-				};
-				console.log(wordbank);
+					count: countStr[0],
+					uploader: config.uploader,
+					download: 0
+				});
 
-
-
+				if (wordbank.category != '考试词表') {
+					return;
+				}
+				wordbank.save(function(err,word){
+					if (err) {
+						return console.log(err);
+					}
+					console.log(word);
+				});
+				loadWordById(classId);
+				// wordbankList.push(wordbank);
+				// console.log(wordbank);
 			}
 				// console.log(length);
 		});
@@ -48,23 +61,20 @@ function parseHtml(text){
 
 }
 
-function readFile(){
-	fs.readFile('wordbank.html',function(err,data){
-		if (err) {
-			console.log(err);
-			return err;
-		}
-		// return data.toString();
-		// console.log(data.toString());
-		parseHtml(data.toString());
-	});
+function loadWordById(classId){
+	wordCrawler.getCourseByClassId(classId);
 }
 
-// var content = readFile();
-// console.log(content);
+// function readFile(){
+// 	fs.readFile('wordbank.html',function(err,data){
+// 		if (err) {
+// 			console.log(err);
+// 			return err;
+// 		}
+// 		parseHtml(data.toString());
+// 	});
+// }
 
-// getWordbanList();
 
-// readFile();
 getWordbankList();
 
