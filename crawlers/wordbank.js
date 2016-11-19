@@ -1,8 +1,11 @@
 var cheerio = require('cheerio');
 var request = require('superagent');
-var fs = require('fs');
+var WordbankModel = require('')
+// var fs = require('fs');
 
-function getWordbanList(){
+var wordbankList = [];
+
+function getWordbankList(){
 	request.get('http://word.iciba.com/')
 	.send()
 	.end(function(err,res){
@@ -13,40 +16,55 @@ function getWordbanList(){
 		parseHtml(res.text);
 	})
 }
-
+var i = 0;
+var j = 0;
 function parseHtml(text){
 	var $ = cheerio.load(text);
 	var item = [];
-	// var li = $('.cl li').text();
-	// console.log(li);
-	// $('.cl #mainwordlist li').filter('0').attr('has_child').each(function(id,element){
-	// 	// var $element = $('h3',element).text();
-	// 	// console.log($element);
-	// 	// var $element = $(element).find('h3').text();
-	// 	// console.log($element);
-	// 	// console.log($(element));
-	// 	var $element = $('h4',element).text();
-	// 	item.push($element);
+	$('.main_l').each(function(id,element){
+		console.log('the element');
+		var category = $('h2',element).text();
+		
+		$('li',element).each(function(id,element){
 
-	// 	// console.log(item.title);
+			var length = $('li',element).length;
+				if (length == 0) {
+				var countStr = $('p',element).text();
+				countStr = countStr.match(/[0-9]+/);
+				var wordbank = {
+					category: category,
+					bankName: $(':header',element).text(),
+					classId: $(element).attr('class_id'),
+					count: countStr[0]
+				};
+				console.log(wordbank);
 
-	// });
-	// var str = item.join(',');	
-	// console.log(str);
-	console.log($('.cl #mainwordlist li').filter(':header').text());
+
+
+			}
+				// console.log(length);
+		});
+	});
+
 }
 
 function readFile(){
-	fs.readFile('index.html',function(err,data){
+	fs.readFile('wordbank.html',function(err,data){
 		if (err) {
 			console.log(err);
-			return;
+			return err;
 		}
+		// return data.toString();
 		// console.log(data.toString());
 		parseHtml(data.toString());
 	});
 }
 
+// var content = readFile();
+// console.log(content);
+
 // getWordbanList();
 
-readFile();
+// readFile();
+getWordbankList();
+

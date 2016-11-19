@@ -1,5 +1,23 @@
 var cheerio = require('cheerio');
 var request = require('superagent');
+
+//直接爬去一个 class的所有单词
+exports.getCourseByClassId = function(classId){
+	superagent.get('http://word.iciba.com/?action=courses&classid=' + classId)
+	.send()
+	.end(function(err,res){
+		if (err) return console.log(err);
+		var courseLength = getCourseLength(res.text);
+		for(var i = 0;i < courseLength;i ++){
+			getCourse(classId,i);	
+		}
+	})
+}
+
+//根据 text 解析出 courselength
+function getCourseLength(){
+
+}
 // classId 为一个词库 id，courseId 为课程内每个章节的id
 exports.getCourse = function(classId,courseId){
 	request.get('http://word.iciba.com/?action=words&class=' + classId + '&course=' + courseId)
@@ -30,10 +48,7 @@ function parseWordSchema(text){
 			explain: explain
 		});
 
+		
 		// console.log(word + '\n' + phonetic + '\n' + explain);
 	});
-}
-
-for (var i = 1; i < 30; i ++) {
-	exports.getCourse(11,i);
 }
