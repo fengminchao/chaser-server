@@ -17,7 +17,7 @@ app.get('/api/wordbank',function(req,res){
 });
 
 app.get('/api/wordbank/:id',function(req,res){
-	Wordbank.find({classId: req.params.id},function(err,words){
+	WordModel.find({classId: req.params.id},function(err,words){
 		if (err) {
 			res.statusCode = 500;
 			return res.send();
