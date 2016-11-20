@@ -33,12 +33,15 @@ http://www.iciba.com/index.php?a=getWordMean&c=search&list=1%2C3%2C4%2C8%2C9%2C1
 - return:
 
 ```
-[
-  {
-	"order":int,
-	"word":str,
-	"phonetic":str,
-	"explain":str	
-  }
-]
+{
+    "name":str,
+    "count":int,
+    "data":[
+    	{
+	    "word":str,
+	    "phonetic":str,
+	    "explain":str		
+	},...
+    ]
+}
 ```
