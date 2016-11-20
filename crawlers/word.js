@@ -1,7 +1,7 @@
 var cheerio = require('cheerio');
 var request = require('superagent');
 var mongoose = require('mongoose');
-var WordModel = require('../models/word');
+var WordModel = require('../models').Word;
 
 
 //直接爬去一个 class的所有单词
@@ -13,7 +13,7 @@ exports.getCourseByClassId = function(classId){
 		var courseLength = getCourseLength(res.text);
 		console.log('courseLength: ' + courseLength);
 		for(var i = 0;i < courseLength;i ++){
-			getCourse(classId,i);	
+			exports.getCourse(classId,i);
 		}
 	})
 }
@@ -21,7 +21,7 @@ exports.getCourseByClassId = function(classId){
 //根据 text 解析出 courselength
 function getCourseLength(text){
 	var $ = cheerio.load(text);
-	return $('.study_speed_m').find('li').length;
+	return $('.study-speed-m').find('li').length;
 }
 // classId 为一个词库 id，courseId 为课程内每个章节的id
 exports.getCourse = function(classId,courseId){

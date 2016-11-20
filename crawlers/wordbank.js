@@ -3,11 +3,8 @@ var request = require('superagent');
 var WordbankModel = require('../models').Wordbank;
 var config = require('../config');
 var wordCrawler = require('./word');
-// var fs = require('fs');
 
-
-
-function getWordbankList(){
+exports.getWordbankList = function getWordbankList(){
 	request.get('http://word.iciba.com/')
 	.send()
 	.end(function(err,res){
@@ -18,8 +15,7 @@ function getWordbankList(){
 		parseHtml(res.text);
 	})
 }
-var i = 0;
-var j = 0;
+
 function parseHtml(text){
 	var $ = cheerio.load(text);
 	var item = [];
@@ -65,16 +61,6 @@ function loadWordById(classId){
 	wordCrawler.getCourseByClassId(classId);
 }
 
-// function readFile(){
-// 	fs.readFile('wordbank.html',function(err,data){
-// 		if (err) {
-// 			console.log(err);
-// 			return err;
-// 		}
-// 		parseHtml(data.toString());
-// 	});
-// }
 
 
-getWordbankList();
 
