@@ -26,7 +26,7 @@ function parseHtml(text){
 		$('li',element).each(function(id,element){
 
 			var length = $('li',element).length;
-				if (length == 0) {
+			if (length == 0) {
 				var countStr = $('p',element).text();
 				countStr = countStr.match(/[0-9]+/);
 				var wordbank = new WordbankModel({
@@ -41,18 +41,18 @@ function parseHtml(text){
 				if (wordbank.category != '考试词表') {
 					return;
 				}
-				wordbank.save(function(err,word){
+				wordbank.save(function(err,wordbank){
 					if (err) {
 						return console.log(err);
 					}
-					console.log(word);
+					console.log(wordbank);
 				});
-				loadWordById(classId);
+				loadWordById(wordbank.classId);
 				// wordbankList.push(wordbank);
 				// console.log(wordbank);
 			}
 				// console.log(length);
-		});
+			});
 	});
 
 }
